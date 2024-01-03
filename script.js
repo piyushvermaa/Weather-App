@@ -154,10 +154,44 @@ async function fetchSearchWeatherInfo(city){
           );
         const data = await response.json();
         loadingScreen.classList.remove("active");
+     
+      ///  console.log(data);
+        if(data.message!='city not found'){
         userInfoContainer.classList.add("active");
         renderWeatherInfo(data);
+        }
+        else{
+            const cityName = document.querySelector("[data-cityName]");
+    const countryIcon = document.querySelector("[data-countryIcon]");
+    const desc = document.querySelector("[data-weatherDesc]");
+    const weatherIcon = document.querySelector("[data-weatherIcon]");
+    const temp = document.querySelector("[data-temp]");
+    const windspeed = document.querySelector("[data-windspeed]");
+    const humidity = document.querySelector("[data-humidity]");
+    const cloudiness = document.querySelector("[data-cloudiness]");
+    cityName.innerText="";
+    cityName.innerText = "";
+    countryIcon.src = "";
+    desc.innerText = "";
+    weatherIcon.src = "";
+    temp.innerText = "";
+    windspeed.innerText = "";
+    humidity.innerText = "";
+    cloudiness.innerText = "";
+            raiseToast("City not found")
+        }
     }
     catch(err) {
         //invalid city
+       // console.log("hi");
     }
+}
+
+function raiseToast(message){
+    var selectToast = document.querySelector(".toast");
+    selectToast.textContent=message;
+    selectToast.style.display="block";
+    setTimeout(()=>{
+        selectToast.style.display="none";
+    },2000);
 }
